@@ -1,69 +1,148 @@
-import Image from "next/image";
+import { fetchSliderImages, fetchCategories, fetchBusinessSettings } from "@/lib/api";
+import { HeroSlider } from "@/components/HeroSlider";
+import { CategorySection } from "@/components/CategorySection";
+import { ScrollReveal } from "@/components/ScrollReveal";
+import { siteConfig } from "@/config/seo.config";
+import { MessageCircle, Phone, Sparkles, Award, HeartHandshake } from "lucide-react";
 
-export default function Home() {
+export const revalidate = 60; // ISR cache revalidation every 60 seconds
+
+export default async function HomePage() {
+  const [sliderImages, categories, settings] = await Promise.all([
+    fetchSliderImages(),
+    fetchCategories(),
+    fetchBusinessSettings(),
+  ]);
+
+  const primaryCategories = categories.filter((c) => c.type === "primary");
+  const secondaryCategories = categories.filter((c) => c.type === "secondary");
+  const otherCategories = categories.filter((c) => c.type === "other");
+
+  const phone = settings?.phone || siteConfig.phone;
+  const whatsapp = settings?.whatsapp || siteConfig.whatsapp;
+
+  const whatsappUrl = `https://wa.me/${whatsapp.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
+    "Hello Swasthika Floral Decor, I would like to inquire about wedding and event decoration packages."
+  )}`;
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.js
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="space-y-4 sm:space-y-8">
+      {/* 1. Hero Image Slider (images with show_on_slider = true) */}
+      <HeroSlider slides={sliderImages} />
+
+      {/* Brand Value Pillars (Subtle, Light, Mobile-first) */}
+      <section className="py-6 border-b border-stone-200/70 bg-[#FAF8F5]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center sm:text-left">
+            <div className="flex items-center gap-3.5 justify-center sm:justify-start">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold-100/70 text-gold-700">
+                <Sparkles className="h-5 w-5" />
+              </div>
+              <div>
+                <h4 className="text-xs font-semibold uppercase tracking-wider text-stone-900">
+                  Custom Floral Artistry
+                </h4>
+                <p className="text-[11px] sm:text-xs font-light text-stone-500">
+                  Tailored wedding themes & fresh blooms
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3.5 justify-center sm:justify-start">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold-100/70 text-gold-700">
+                <Award className="h-5 w-5" />
+              </div>
+              <div>
+                <h4 className="text-xs font-semibold uppercase tracking-wider text-stone-900">
+                  Premier Wedding Styling
+                </h4>
+                <p className="text-[11px] sm:text-xs font-light text-stone-500">
+                  Poruwa, settee backs, and church aisles
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3.5 justify-center sm:justify-start">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold-100/70 text-gold-700">
+                <HeartHandshake className="h-5 w-5" />
+              </div>
+              <div>
+                <h4 className="text-xs font-semibold uppercase tracking-wider text-stone-900">
+                  Dedicated Coordination
+                </h4>
+                <p className="text-[11px] sm:text-xs font-light text-stone-500">
+                  Seamless execution on your special day
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* 2. Primary Categories Section */}
+      <CategorySection
+        id="primary-categories"
+        scriptTitle="Signature"
+        title="Primary Collections"
+        description="Our most prominent centerpiece designs: wedding poruwa setups, bridal settee backdrops, and luxury grand entrances."
+        categories={primaryCategories}
+        priority={true}
+      />
+
+      {/* 3. Secondary Categories Section */}
+      <CategorySection
+        id="secondary-categories"
+        scriptTitle="Elegance in Details"
+        title="Secondary Decorations"
+        description="Thoughtfully curated accents: banquet table centerpieces, floral walkways, car decorations, and oil lamp styling."
+        categories={secondaryCategories}
+      />
+
+      {/* 4. Other Categories Section */}
+      <CategorySection
+        id="other-categories"
+        scriptTitle="Special Celebrations"
+        title="Other Floral Specialities"
+        description="Custom floral arrangements for engagements, birthdays, corporate functions, and intimate gatherings."
+        categories={otherCategories}
+      />
+
+      {/* Consultation & Booking CTA Banner */}
+      <section className="py-12 sm:py-16">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <ScrollReveal className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-stone-900 via-[#332415] to-[#20150B] p-8 sm:p-12 text-white shadow-xl text-center space-y-5">
+            <span className="font-charm text-2xl sm:text-4xl text-gold-300 block">
+              Reserve Your Date
+            </span>
+            <h2 className="font-serif-elegant text-2xl sm:text-4xl font-light text-white max-w-xl mx-auto leading-snug">
+              Let&apos;s Create Something Breathtaking For Your Wedding Day
+            </h2>
+            <p className="text-xs sm:text-sm font-light text-stone-300 max-w-md mx-auto leading-relaxed">
+              Dates fill up quickly during peak wedding seasons. Reach out to schedule a consultation
+              or discuss your personalized decor package.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3">
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gold-500 hover:bg-gold-400 text-stone-950 px-6 py-3 text-xs font-bold uppercase tracking-wider active:scale-95 transition-all shadow-md"
+              >
+                <MessageCircle className="h-4 w-4" />
+                <span>Message on WhatsApp</span>
+              </a>
+              <a
+                href={`tel:${phone.replace(/\s+/g, "")}`}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 hover:bg-white/20 text-white px-6 py-3 text-xs font-medium uppercase tracking-wider backdrop-blur-xs active:scale-95 transition-all"
+              >
+                <Phone className="h-3.5 w-3.5 text-gold-300" />
+                <span>Call {phone}</span>
+              </a>
+            </div>
+          </ScrollReveal>
         </div>
-      </main>
+      </section>
     </div>
   );
 }

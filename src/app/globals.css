@@ -1,26 +1,98 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FAF8F5;
+  --foreground: #1E1B18;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  font-weight: 350;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: #9E7244;
+  color: #FFFFFF;
+}
+
+/* Custom Typography Utilities */
+.font-charm {
+  font-family: var(--font-charm), cursive;
+}
+
+.font-serif-elegant {
+  font-family: var(--font-serif), Georgia, serif;
+}
+
+/* Gold Theme Utilities */
+.bg-warm-ivory {
+  background-color: #FAF8F5;
+}
+
+.bg-gold-50 { background-color: #FAF6F0; }
+.bg-gold-100 { background-color: #F4ECE1; }
+.bg-gold-500 { background-color: #B28859; }
+.bg-gold-600 { background-color: #9E7244; }
+.bg-gold-700 { background-color: #825B34; }
+.bg-gold-800 { background-color: #684626; }
+
+.text-gold-500 { color: #B28859; }
+.text-gold-600 { color: #9E7244; }
+.text-gold-700 { color: #825B34; }
+.text-gold-800 { color: #684626; }
+
+.border-gold-200 { border-color: #E8D9C5; }
+.border-gold-300 { border-color: #D6BF9F; }
+.border-gold-500 { border-color: #B28859; }
+.border-gold-600 { border-color: #9E7244; }
+
+/* Shimmer Loading Effect */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(240, 235, 227, 0.7) 0%,
+    rgba(255, 255, 255, 0.9) 50%,
+    rgba(240, 235, 227, 0.7) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s infinite ease-in-out;
+}
+
+/* Scroll Animation Transitions */
+.reveal-init {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Image overlay gradient */
+.overlay-gradient {
+  background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(20, 16, 12, 0.85) 100%);
+}
+
+.hero-overlay-gradient {
+  background: linear-gradient(180deg, rgba(20, 16, 12, 0.3) 0%, rgba(20, 16, 12, 0.1) 40%, rgba(20, 16, 12, 0.8) 100%);
 }
