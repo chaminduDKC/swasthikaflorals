@@ -65,7 +65,7 @@ export const defaultMetadata = {
   creator: siteConfig.englishName,
 icons: {
   icon: [
-    { url: "/logo.png", type: "image/png", sizes: "32x32" },
+    { url: "/logo.png", type: "image/png", sizes: "64x64" },
   ],
   apple: "/apple-icon.png",
 },
