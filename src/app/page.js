@@ -116,13 +116,11 @@ export default async function HomePage() {
               <div className="w-12 h-0.5 bg-gold-400 mx-auto my-3" />
             </div>
 
-            <div className="space-y-4 text-stone-600 text-sm sm:text-base font-light leading-relaxed max-w-2xl mx-auto">
+            <div className="space-y-3 text-stone-600 text-sm sm:text-base font-light leading-relaxed max-w-2xl mx-auto">
               <p>
                 Swasthika Floral Decor was born from a deep love for the art of flowers and a desire to bring extraordinary beauty to Sri Lanka&apos;s most cherished celebrations. Every arrangement we create tells a story.
               </p>
-              <p>
-                We blend the richness of traditional Sri Lankan aesthetics with contemporary floral design, crafting immersive experiences — from grand Poruwa setups to intimate table settings — with meticulous care and the freshest blooms.
-              </p>
+              
             </div>
           </ScrollReveal>
         </div>
