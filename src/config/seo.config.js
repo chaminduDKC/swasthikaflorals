@@ -63,13 +63,12 @@ export const defaultMetadata = {
   keywords: siteConfig.keywords,
   authors: [{ name: siteConfig.englishName }],
   creator: siteConfig.englishName,
-  icons: {
-    icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/icon.png", type: "image/png", sizes: "32x32" },
-    ],
-    apple: "/apple-icon.png",
-  },
+icons: {
+  icon: [
+    { url: "/logo.png", type: "image/png", sizes: "32x32" },
+  ],
+  apple: "/apple-icon.png",
+},
   alternates: {
     // FIXED: was completely missing — without this Next.js won't emit <link rel="canonical">
     canonical: siteConfig.url,

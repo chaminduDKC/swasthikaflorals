@@ -26,6 +26,7 @@ const outfit = Outfit({
   display: "swap",
 });
 
+
 import { fetchBusinessSettings } from "@/lib/api";
 
 export const metadata = defaultMetadata;
