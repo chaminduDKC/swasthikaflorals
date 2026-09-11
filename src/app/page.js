@@ -26,7 +26,20 @@ export default async function HomePage() {
   )}`;
 
   return (
-    <div className="space-y-4 sm:space-y-8">
+    <div className="space-y-6 sm:space-y-10">
+      {/* Hero Intro Header above Slider */}
+      <section className="pt-6 sm:pt-10 sm:pb-3 text-center px-2 ">
+        <ScrollReveal className="max-w-3xl mx-auto ">
+          <span className="font-charm text-2xl sm:text-4xl text-gold-700 block">
+            Where Blooms
+          </span>
+          <h1 className="font-serif-elegant text-3xl sm:text-5xl md:text-6xl font-light text-stone-900 tracking-wide leading-tight">
+            Become Magic
+          </h1>
+         
+        </ScrollReveal>
+      </section>
+
       {/* 1. Hero Image Slider (images with show_on_slider = true) */}
       <HeroSlider slides={sliderImages} />
 
@@ -88,6 +101,32 @@ export default async function HomePage() {
         categories={primaryCategories}
         priority={true}
       />
+
+      {/* Our Story Section (below Primary Categories) */}
+      <section className="py-14 sm:py-20 bg-[#F4ECE1]/45 border-y border-stone-200/70 my-4 sm:my-8">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+          <ScrollReveal className="space-y-4 sm:space-y-6">
+            <div className="space-y-1.5">
+              <span className="font-charm text-2xl sm:text-3xl text-gold-700 block">
+                Our Story
+              </span>
+              <h2 className="font-serif-elegant text-2xl sm:text-4xl font-light text-stone-900 tracking-wide">
+                Passion Blooms Here
+              </h2>
+              <div className="w-12 h-0.5 bg-gold-400 mx-auto my-3" />
+            </div>
+
+            <div className="space-y-4 text-stone-600 text-sm sm:text-base font-light leading-relaxed max-w-2xl mx-auto">
+              <p>
+                Swasthika Floral Decor was born from a deep love for the art of flowers and a desire to bring extraordinary beauty to Sri Lanka&apos;s most cherished celebrations. Every arrangement we create tells a story.
+              </p>
+              <p>
+                We blend the richness of traditional Sri Lankan aesthetics with contemporary floral design, crafting immersive experiences — from grand Poruwa setups to intimate table settings — with meticulous care and the freshest blooms.
+              </p>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
 
       {/* 3. Secondary Categories Section */}
       <CategorySection

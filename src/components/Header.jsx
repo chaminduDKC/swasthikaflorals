@@ -44,7 +44,7 @@ export function Header({ settings = null }) {
           href="/"
           className="group flex items-center gap-3 transition-transform active:scale-95"
         >
-          <div className="relative h-11 w-11 overflow-hidden rounded-full border border-gold-300/80 bg-white p-0.5 shadow-xs flex items-center justify-center">
+          <div className="relative h-12 w-12 overflow-hidden rounded-full  p-0.5 flex items-center justify-center">
             <Image
               src="/logo.png"
               alt={siteConfig.name}

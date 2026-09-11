@@ -150,7 +150,7 @@ export function HeroSlider({ slides = [] }) {
     if (isPaused) return;
     const timer = setInterval(() => {
       nextSlide();
-    }, 4500);
+    }, 2500);
     return () => clearInterval(timer);
   }, [isPaused, nextSlide]);
 
