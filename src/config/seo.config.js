@@ -10,28 +10,47 @@ export const siteConfig = {
   tagline: "Bespoke Wedding & Event Floral Styling",
   description:
     "Exquisite wedding decorations, luxury poruwa florals, settee backs, and event styling in Sri Lanka. Crafting timeless floral art for your unforgettable day.",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://swasthikaflorals.com",
-  phone: process.env.NEXT_PUBLIC_CONTACT_PHONE || "+94 77 123 4567",
-  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP || "+94771234567",
-  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "info@swasthikaflorals.com",
+  url: "https://swasthikaflorals.vercel.app", // TODO: switch to custom domain when available (.lk or .com) — helps trust + SEO
+  phone: "+94767681119", // FIXED: removed stray space, E.164 format — verify this is actually correct, "+9476" read oddly
+  phoneDisplay: "+94 76 768 1119", // human-readable version for UI display, separate from schema-safe version above
+  whatsapp: "+94705588209",
+  email: "swasthikaflorals@gmail.com",
   address: {
-    city: "Colombo",
-    region: "Western Province",
+    streetAddress: "Swasthika Florals", // TODO: add real street/business address if you have one (even by-appointment helps local SEO)
+    city: "Matara",
+    region: "Southern Province",
+    postalCode: "81000", // TODO: add postal code
     country: "Sri Lanka",
   },
+ geo: {
+  latitude: "5.94499",
+  longitude: "80.54910",
+},
+  openingHours: "By appointment", // TODO: replace with real hours if you have fixed ones, e.g. "Mo-Sa 09:00-18:00"
   keywords: [
-    "Floral Decor Sri Lanka",
+    "Floral Decoration Sri Lanka",
+    "වෙඩින් ඩෙකරේශන්",
+    "Floral Decoration Matara",
+    "Wedding Decoration Sri Lanka",
+    "Wedding Decoration Matara",
+    "Kandyan Style Wedding",
     "Wedding Flowers Colombo",
     "Poruwa Decor Sri Lanka",
     "Luxury Wedding Florist",
     "Settee Back Floral Arrangement",
     "Bridal Table Decorations",
+    "Bridal Bouquet Decorations",
     "Swasthika Floral Decor",
     "ස්වස්තික මල් සැරසිලි",
     "Event Styling Sri Lanka",
   ],
   ogImage: "/og-image.jpg",
-  locale: "en_US",
+  logo: "/logo.png", // TODO: confirm this file actually exists in /public — schema breaks silently if not
+  locale: "en_LK", // FIXED: was en_US, but content targets Sri Lanka and mixes Sinhala
+  sameAs: [
+    "https://www.facebook.com/share/1FASBfNvAB/", // TODO: verify this URL actually resolves — mismatched naming vs Instagram below
+    "https://instagram.com/swasthikaflorals",
+  ],
 };
 
 export const defaultMetadata = {
@@ -44,10 +63,27 @@ export const defaultMetadata = {
   keywords: siteConfig.keywords,
   authors: [{ name: siteConfig.englishName }],
   creator: siteConfig.englishName,
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "32x32" },
+    ],
+    apple: "/apple-icon.png",
+  },
+  alternates: {
+    // FIXED: was completely missing — without this Next.js won't emit <link rel="canonical">
+    canonical: siteConfig.url,
+    // If you have real Sinhala-language pages, uncomment and point to them:
+    // languages: {
+    //   en: siteConfig.url,
+    //   si: `${siteConfig.url}/si`,
+    // },
+  },
   openGraph: {
     type: "website",
     locale: siteConfig.locale,
-    url: siteConfig.url,
+    // FIXED: removed hardcoded `url` here — it made every page report the homepage URL to
+    // social crawlers. Set `openGraph.url` per-page instead, in each route's own metadata export.
     title: `${siteConfig.name} | ${siteConfig.tagline}`,
     description: siteConfig.description,
     siteName: siteConfig.name,
@@ -90,18 +126,26 @@ export function getLocalBusinessSchema() {
     alternateName: siteConfig.englishName,
     description: siteConfig.description,
     url: siteConfig.url,
-    telephone: siteConfig.phone,
+    telephone: siteConfig.phone, // now E.164-safe
     address: {
       "@type": "PostalAddress",
+      streetAddress: siteConfig.address.streetAddress || undefined,
       addressLocality: siteConfig.address.city,
       addressRegion: siteConfig.address.region,
+      postalCode: siteConfig.address.postalCode || undefined,
       addressCountry: siteConfig.address.country,
     },
+    // FIXED: was missing entirely — meaningful boost for local/"near me" search
+    geo: siteConfig.geo.latitude
+      ? {
+          "@type": "GeoCoordinates",
+          latitude: siteConfig.geo.latitude,
+          longitude: siteConfig.geo.longitude,
+        }
+      : undefined,
+    openingHours: siteConfig.openingHours,
     priceRange: "$$",
-    image: `${siteConfig.url}/logo.png`,
-    sameAs: [
-      "https://facebook.com/swasthikaflorals",
-      "https://instagram.com/swasthikaflorals",
-    ],
+    image: `${siteConfig.url}${siteConfig.logo}`,
+    sameAs: siteConfig.sameAs,
   };
 }
