@@ -106,16 +106,6 @@ export default async function HomePage() {
       <section className="py-14 sm:py-20 bg-[#F4ECE1]/45 border-y border-stone-200/70 my-4 sm:my-8">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <ScrollReveal className="space-y-4 sm:space-y-6">
-            <div className="space-y-1.5">
-              <span className="font-charm text-2xl sm:text-3xl text-gold-700 block">
-                Our Story
-              </span>
-              <h2 className="font-serif-elegant text-2xl sm:text-4xl font-light text-stone-900 tracking-wide">
-                Passion Blooms Here
-              </h2>
-              <div className="w-12 h-0.5 bg-gold-400 mx-auto my-3" />
-            </div>
-
             <div className="space-y-3 text-stone-600 text-sm sm:text-base font-light leading-relaxed max-w-2xl mx-auto">
               <p>
                 Swasthika Floral Decor was born from a deep love for the art of flowers and a desire to bring extraordinary beauty to Sri Lanka&apos;s most cherished celebrations. Every arrangement we create tells a story.
